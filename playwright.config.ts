@@ -29,19 +29,25 @@ export default defineConfig({
     // baseURL: 'http://127.0.0.1:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    headless: true, // Run tests in headless mode
+    viewport: { width: 1280, height: 720 }, // Default viewport size
+    ignoreHTTPSErrors: true, // Ignore HTTPS errors
+    screenshot: 'only-on-failure', // Capture screenshot on failure
+    video: 'retain-on-failure', // Capture video on failure
+    trace: 'retain-on-failure', // Record trace on failure
+    baseURL: 'https://playwright.dev/',
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { browserName: 'chromium', ...devices['Desktop Chrome'] },
     },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: { browserName: 'firefox', ...devices['Desktop Firefox'] },
     },
 
     {
@@ -71,9 +77,9 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
-  webServer: {
-    command: 'npm run start',
-    url: 'http://127.0.0.1:3000',
-    reuseExistingServer: !process.env.CI,
-  },
+  // webServer: {
+  //   command: 'npm run start',
+  //   url: 'http://127.0.0.1:3000',
+  //   reuseExistingServer: !process.env.CI,
+  // },
 });
